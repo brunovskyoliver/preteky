@@ -31,6 +31,7 @@ def handle_switch(event):
         status = False
 
 def handle_race():
+    c.bind('<Button-1>', handle_switch)
     global x_obj_1, x_obj_2, y_obj_1, y_obj_2, status
     finish_line = 100
     obj_1_next_move, obj_2_next_move = random.randint(1, 10), random.randint(1, 10)
@@ -64,6 +65,6 @@ def main(event):
     finish()
     handle_race()
 
-c.bind('<Button-1>', handle_switch)
+
 c.bind_all('<space>', main)
 t.mainloop()
