@@ -37,7 +37,6 @@ def handle_race():
     if status == True and x_obj_1 > finish_line and x_obj_2 > finish_line:
         c.delete('coords')
         if min(x_obj_1-obj_1_next_move, x_obj_2-obj_2_next_move) > finish_line:
-            
             x_obj_1 -= obj_1_next_move
             x_obj_2 -= obj_2_next_move
         else:
