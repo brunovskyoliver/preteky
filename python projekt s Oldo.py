@@ -8,8 +8,9 @@ t = tkinter.Tk()
 c = tkinter.Canvas(width=screen_width, height=screen_height, bg='white')
 c.pack()
 
-x_obj_1, x_obj_2, y_obj_1, y_obj_2 = 700, 700, 50, 300
+x_obj_1, x_obj_2, y_obj_1, y_obj_2 = 700, 700, 75, 375
 status = False
+distance_obj_1, distance_obj_2 = 0, 0
 
 def obj_1():
     global x_obj_1, y_obj_1
@@ -66,7 +67,7 @@ def handle_switch(event):
 
 def handle_race():
     c.bind('<Button-1>', handle_switch)
-    global x_obj_1, x_obj_2, y_obj_1, y_obj_2, status
+    global x_obj_1, x_obj_2, y_obj_1, y_obj_2, status, distance_obj_1, distance_obj_2
     finish_line = 100
     obj_1_next_move, obj_2_next_move = random.randint(1, 10), random.randint(1, 10)
     if status == True and x_obj_1 > finish_line and x_obj_2 > finish_line:
@@ -98,8 +99,13 @@ def handle_race():
         if x_obj_1 > finish_line and x_obj_2 > finish_line:
             c.move('obj_1', -obj_1_next_move, 0)
             c.move('obj_2', -obj_2_next_move, 0)
-        c.create_text(x_obj_1+obj_1_next_move,y_obj_1-30,text=str(x_obj_1-finish_line),tags='coords',fill='black') #counting the distance from the finish line
-        c.create_text(x_obj_2+obj_2_next_move,y_obj_2-30,text=str(x_obj_2-finish_line),tags='coords',fill='black') #counting the distance from the finish line
+        distance_obj_1 += obj_1_next_move
+        distance_obj_2 += obj_2_next_move
+        c.create_text(x_obj_1+obj_1_next_move+10,y_obj_1-30,text="Od cieľa "+str(x_obj_1-finish_line)+" pixelov",tags='coords',fill='black') #counting the distance from the finish line
+        c.create_text(x_obj_2+obj_2_next_move+10,y_obj_2-30,text="Od cieľa "+str(x_obj_2-finish_line)+" pixelov",tags='coords',fill='black') #counting the distance from the finish line
+        c.create_text(x_obj_1+obj_1_next_move+10,y_obj_1-50,text="Prešiel "+str(distance_obj_1)+" pixelov",tags='coords',fill='black') #counting the distance from the finish line
+        c.create_text(x_obj_2+obj_2_next_move+10,y_obj_2-50,text="Prešiel "+str(distance_obj_2)+" pixelov",tags='coords',fill='black') #counting the distance from the finish line
+        
         c.after(100, handle_race)
     else:
         return 0
