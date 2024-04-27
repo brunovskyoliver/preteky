@@ -1,3 +1,4 @@
+# (c) 2024 Oliver Brunovský, Štefan Jankovič
 import tkinter
 import random
 
@@ -64,7 +65,6 @@ def main(event):
     obj_2()
     finish()
     handle_race()
-
 
 c.bind_all('<space>', main)
 t.mainloop()

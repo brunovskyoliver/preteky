@@ -1,3 +1,4 @@
+# (c) 2024 Oliver Brunovský, Štefan Jankovič
 import tkinter
 import random
 
@@ -10,6 +11,7 @@ c.pack()
 
 x_obj_1, x_obj_2, y_obj_1, y_obj_2 = 700, 700, 75, 375
 status = False
+started = False
 distance_obj_1, distance_obj_2 = 0, 0
 
 def obj_1():
@@ -95,30 +97,32 @@ def handle_race():
             elif x_obj_2-obj_2_next_move < finish_line and (x_obj_1-obj_1_next_move) > (x_obj_2-obj_2_next_move):
                 x_obj_2 = finish_line
                 c.create_text(750/2,450/2,text='Vyhral obj_2',fill='black')
-        print(f'pos1 {x_obj_1}, pos2 {x_obj_2}') # maybe use the distance form finish line?
+        #print(f'pos1 {x_obj_1}, pos2 {x_obj_2}') # maybe use the distance form finish line?
         if x_obj_1 > finish_line and x_obj_2 > finish_line:
             c.move('obj_1', -obj_1_next_move, 0)
             c.move('obj_2', -obj_2_next_move, 0)
         distance_obj_1 += obj_1_next_move
         distance_obj_2 += obj_2_next_move
-        c.create_text(x_obj_1+obj_1_next_move+10,y_obj_1-30,text="Od cieľa "+str(x_obj_1-finish_line)+" pixelov",tags='coords',fill='black') #counting the distance from the finish line
-        c.create_text(x_obj_2+obj_2_next_move+10,y_obj_2-30,text="Od cieľa "+str(x_obj_2-finish_line)+" pixelov",tags='coords',fill='black') #counting the distance from the finish line
-        c.create_text(x_obj_1+obj_1_next_move+10,y_obj_1-50,text="Prešiel "+str(distance_obj_1)+" pixelov",tags='coords',fill='black') #counting the distance from the finish line
-        c.create_text(x_obj_2+obj_2_next_move+10,y_obj_2-50,text="Prešiel "+str(distance_obj_2)+" pixelov",tags='coords',fill='black') #counting the distance from the finish line
-        
+        c.create_text(x_obj_1+obj_1_next_move+10,y_obj_1-30,text="Od cieľa "+str(x_obj_1-finish_line)+" pixelov",tags='coords',fill='black') # counting the distance from the finish line
+        c.create_text(x_obj_2+obj_2_next_move+10,y_obj_2-30,text="Od cieľa "+str(x_obj_2-finish_line)+" pixelov",tags='coords',fill='black') # counting the distance from the finish line
+        c.create_text(x_obj_1+obj_1_next_move+10,y_obj_1-50,text="Prešiel "+str(distance_obj_1)+" pixelov",tags='coords',fill='black') # counting the distance travelled
+        c.create_text(x_obj_2+obj_2_next_move+10,y_obj_2-50,text="Prešiel "+str(distance_obj_2)+" pixelov",tags='coords',fill='black') # counting the distance travelled
         c.after(100, handle_race)
     else:
         return 0
         
 def main(event):
-    global status
-    if status == False: # so that you can not run the function more times by more clicks of space...
+    global started,status
+    if started == False: # so that you can not run the function more times by more clicks of space...
+        c.delete('start')
+        started = True
         status = True
         obj_1()
         obj_2()
         finish()
         handle_race()
 
+c.create_text(screen_width/2,screen_height/2,text='Stlač SPACE pre štart pretekov',tags='start',fill='black')
 
 c.bind_all('<space>', main)
 t.mainloop()
